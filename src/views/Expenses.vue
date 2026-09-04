@@ -3,7 +3,7 @@
 
     <div class="page-header">
       <div>
-        <p class="brand">BankScope</p>
+        <p class="brand">FinView</p>
         <h1>Expenses</h1>
         <p>Track where your money is going.</p>
       </div>

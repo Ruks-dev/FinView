@@ -3,7 +3,7 @@
 
     <div class="page-header">
       <div>
-        <p class="brand">BankScope</p>
+        <p class="brand">FinView</p>
         <h1>My Profile</h1>
         <p>Manage your personal information and account settings.</p>
       </div>
@@ -110,7 +110,7 @@
         <div class="security-item">
           <div>
             <strong>Bank Connections</strong>
-            <p>Manage the banks connected to BankScope.</p>
+            <p>Manage the banks connected to FinView.</p>
           </div>
 
           <button @click="goAccounts">

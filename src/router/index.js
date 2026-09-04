@@ -2,8 +2,19 @@ import { createRouter, createWebHistory } from "vue-router";
 import Workspace from "../views/Workspace.vue";
 
 const routes = [
-  { path: "/", component: Workspace },
-  { path: "/:pathMatch(.*)*", component: Workspace },
+  {
+    path: "/",
+    component: Workspace,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: Workspace,
+  },
 ];
 
-export default createRouter({ history: createWebHistory(), routes });
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+export default router;

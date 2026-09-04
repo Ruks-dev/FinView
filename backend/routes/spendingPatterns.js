@@ -1,7 +1,10 @@
 import express from "express";
 import pool from "../database.js";
+import { requireAuth } from "../auth.js";
 
 const router = express.Router();
+
+router.use(requireAuth);
 
 // Get spending patterns for an account
 router.get("/:account_id", async (req, res) => {

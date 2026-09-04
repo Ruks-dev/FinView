@@ -1,6 +1,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import pool from "../database.js";
+import { generateSessionToken, requireAuth } from "../auth.js";
 
 const router = express.Router();
 
@@ -141,15 +142,17 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // Successful login
+    const authUser = {
+      user_id: user.user_id,
+      name: user.name,
+      email: user.email,
+      created_at: user.created_at,
+    };
+
     res.json({
       message: "Login successful",
-      user: {
-        user_id: user.user_id,
-        name: user.name,
-        email: user.email,
-        created_at: user.created_at,
-      },
+      user: authUser,
+      token: generateSessionToken(authUser),
     });
   } catch (error) {
     console.error("Error logging in:", error.message);
@@ -157,6 +160,25 @@ router.post("/login", async (req, res) => {
     res.status(500).json({
       message: "Login failed",
     });
+  }
+});
+
+router.get("/me", requireAuth, async (req, res) => {
+  try {
+    const { user_id } = req.user;
+    const result = await pool.query(
+      "SELECT user_id, name, email, created_at FROM users WHERE user_id = $1",
+      [user_id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ user: result.rows[0] });
+  } catch (error) {
+    console.error("Error fetching current user:", error.message);
+    res.status(500).json({ message: "Failed to load current user" });
   }
 });
 

@@ -1,7 +1,10 @@
 import express from "express";
 import pool from "../database.js";
+import { requireAuth } from "../auth.js";
 
 const router = express.Router();
+
+router.use(requireAuth);
 
 //Get all consents (optionally filter by ?user_id=)
 router.get("/", async (req, res) => {

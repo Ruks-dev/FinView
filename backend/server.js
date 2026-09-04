@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import { fileURLToPath } from "node:url";
 import usersRouter from "./routes/users.js";
 import consentsRouter from "./routes/consents.js";
 import bankAccountsRouter from "./routes/bankAccounts.js";
@@ -8,9 +9,11 @@ import balancesRouter from "./routes/balances.js";
 import transactionsRouter from "./routes/transactions.js";
 import spendingPatternsRouter from "./routes/spendingPatterns.js";
 
-
 import pool from "./database.js";
-dotenv.config();
+
+dotenv.config({
+  path: fileURLToPath(new URL(".env", import.meta.url)),
+});
 
 const app = express();
 

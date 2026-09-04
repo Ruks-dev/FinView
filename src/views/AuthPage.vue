@@ -2,6 +2,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import MarketingLayout from "../components/MarketingLayout.vue";
+import { apiUrl } from "../api.js";
+import { saveSession } from "../session.js";
 
 const props = defineProps({
   mode: {
@@ -48,8 +50,8 @@ async function handleSubmit() {
 
     const url =
       props.mode === "login"
-        ? "http://localhost:3000/api/users/login"
-        : "http://localhost:3000/api/users";
+        ? apiUrl("/api/users/login")
+        : apiUrl("/api/users");
 
     const body =
       props.mode === "login"
@@ -78,9 +80,13 @@ async function handleSubmit() {
     }
 
     if (props.mode === "login") {
-  localStorage.setItem("user", JSON.stringify(data.user));
+      const session = {
+        user: data.user,
+        token: data.token || "",
+      };
 
-  router.push("/dashboard");
+      saveSession(session);
+      router.push("/dashboard");
     } else {
       successMessage.value = "Account created successfully.";
 

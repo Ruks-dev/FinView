@@ -1,116 +1,469 @@
+```vue
 <script setup>
+import { computed } from "vue";
 import DashboardLayout from "../components/DashboardLayout.vue";
-defineProps({
+
+const props = defineProps({
   page: String,
   title: String,
   menuOpen: Boolean,
+  user: Object,
   accounts: Array,
   transactions: Array,
   totalBalance: Number,
   naira: Function,
 });
+
+const monthlySpending = computed(() => {
+  const now = new Date();
+
+  return (props.transactions || []).reduce((sum, item) => {
+    if (item.incoming) {
+      return sum;
+    }
+
+    const itemDate = new Date(
+      item.date || item.transaction_date || item.created_at || Date.now()
+    );
+    const isCurrentMonth =
+      itemDate.getMonth() === now.getMonth() &&
+      itemDate.getFullYear() === now.getFullYear();
+
+    return isCurrentMonth ? sum + Number(item.amount || 0) : sum;
+  }, 0);
+});
+
+const previousMonthSpending = computed(() => {
+  const now = new Date();
+  const previousMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+  return (props.transactions || []).reduce((sum, item) => {
+    if (item.incoming) {
+      return sum;
+    }
+
+    const itemDate = new Date(
+      item.date || item.transaction_date || item.created_at || Date.now()
+    );
+    const isPreviousMonth =
+      itemDate.getMonth() === previousMonth.getMonth() &&
+      itemDate.getFullYear() === previousMonth.getFullYear();
+
+    return isPreviousMonth ? sum + Number(item.amount || 0) : sum;
+  }, 0);
+});
+
+const monthlyBudget = computed(() => Math.max(240000, monthlySpending.value * 1.5));
+
+const spendingRatio = computed(() => {
+  if (!monthlyBudget.value) {
+    return 0;
+  }
+
+  return Math.min((monthlySpending.value / monthlyBudget.value) * 100, 100);
+});
+
+const spendingChange = computed(() => {
+  if (!previousMonthSpending.value) {
+    return 0;
+  }
+
+  return ((monthlySpending.value - previousMonthSpending.value) / previousMonthSpending.value) * 100;
+});
+
+const spendingTrendLabel = computed(() => {
+  if (!previousMonthSpending.value) {
+    return "No prior month data";
+  }
+
+  const change = Math.abs(spendingChange.value).toFixed(1);
+  return `${spendingChange.value <= 0 ? "↓" : "↑"} ${change}% from last month`;
+});
+
 defineEmits(["navigate", "toggle-menu"]);
 </script>
+
 <template>
   <DashboardLayout
     :page="page"
     :title="title"
     :menu-open="menuOpen"
+    :user="user"
     @navigate="$emit('navigate', $event)"
     @toggle-menu="$emit('toggle-menu')"
-    ><section class="balance-row">
+  >
+
+    <!-- BALANCE SECTION -->
+    <section class="balance-row">
+
+      <!-- TOTAL BALANCE -->
       <div class="balance-card">
-        <div class="card-kicker">TOTAL BALANCE <span>•••</span></div>
-        <strong>{{ naira(totalBalance) }}</strong>
-        <p class="positive">↗ ₦195,000 <span>this month</span></p>
+
+        <div class="card-kicker">
+          TOTAL BALANCE <span>•••</span>
+        </div>
+
+        <strong>
+          {{ naira(totalBalance) }}
+        </strong>
+
+        <p class="positive">
+          ↗ Your connected accounts
+          <span>current balance</span>
+        </p>
+
         <div class="balance-bars">
+
           <i
             v-for="bar in [35, 48, 42, 65, 56, 72, 88, 78, 94]"
             :key="bar"
             :style="{ height: bar + '%' }"
           ></i>
+
         </div>
+
       </div>
+
+
+      <!-- MONTHLY SPENDING -->
       <div class="quick-card">
-        <p class="card-kicker">MONTHLY SPENDING</p>
-        <strong>₦163,500</strong>
-        <p class="muted">↓ 12.8% from last month</p>
-        <div class="progress"><i style="width: 68%"></i></div>
-        <small>68% of ₦240,000 budget</small>
-      </div>
-    </section>
-    <section class="content-section">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">CONNECTED ACCOUNTS</p>
-          <h2>Your accounts</h2>
+
+        <p class="card-kicker">
+          MONTHLY SPENDING
+        </p>
+
+        <strong>
+          {{ props.naira(monthlySpending) }}
+        </strong>
+
+        <p class="muted">
+          {{ spendingTrendLabel }}
+        </p>
+
+        <div class="progress">
+          <i :style="{ width: Math.max(0, Math.min(spendingRatio, 100)) + '%' }"></i>
         </div>
-        <button class="button dark" @click="$emit('navigate', '/connect-bank')">
+
+        <small>
+          {{ Math.round(spendingRatio) }}% of {{ props.naira(monthlyBudget) }} budget
+        </small>
+
+      </div>
+
+    </section>
+
+
+    <!-- CONNECTED ACCOUNTS -->
+    <section class="content-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <p class="eyebrow">
+            CONNECTED ACCOUNTS
+          </p>
+
+          <h2>
+            Your accounts
+          </h2>
+
+        </div>
+
+
+        <button
+          class="button dark"
+          @click="$emit('navigate', '/connect-bank')"
+        >
           + Connect bank
         </button>
+
       </div>
-      <div class="account-grid">
+
+
+      <!-- ACCOUNTS EXIST -->
+      <div
+        v-if="accounts && accounts.length"
+        class="account-grid"
+      >
+
         <article
           v-for="account in accounts"
-          :key="account.id"
-          :class="['account-card', account.tone]"
+          :key="account.account_id"
+          class="account-card"
         >
+
           <div class="account-top">
-            <span class="bank-logo">{{ account.short }}</span
-            ><span class="card-menu">•••</span>
+
+            <span class="bank-logo">
+
+              {{
+                account.bank_name
+                  ? account.bank_name
+                      .substring(0, 2)
+                      .toUpperCase()
+                  : "B"
+              }}
+
+            </span>
+
+            <span class="card-menu">
+              •••
+            </span>
+
           </div>
-          <p>{{ account.bank }}</p>
-          <small>{{ account.type }} · •••• {{ account.number }}</small
-          ><strong>{{ naira(account.balance) }}</strong
-          ><button @click="$emit('navigate', '/accounts/' + account.id)">
-            View details <span>↗</span>
+
+
+          <p>
+            {{ account.bank_name }}
+          </p>
+
+
+          <small>
+
+            {{ account.account_type }}
+
+            · ••••
+            {{ account.account_number?.slice(-4) }}
+
+          </small>
+
+
+          <strong v-if="account.balance">
+
+            {{
+              account.balance.currency ||
+              account.currency ||
+              "₦"
+            }}
+
+            {{
+              Number(
+                account.balance.available_balance || 0
+              ).toLocaleString()
+            }}
+
+          </strong>
+
+
+          <strong v-else>
+            Balance unavailable
+          </strong>
+
+
+          <button
+            @click="
+              $emit(
+                'navigate',
+                '/accounts/' + account.account_id
+              )
+            "
+          >
+
+            View details
+            <span>↗</span>
+
           </button>
+
         </article>
+
       </div>
+
+
+      <!-- NO ACCOUNTS -->
+      <div
+        v-else
+        class="empty"
+      >
+
+        <div class="empty-icon">
+          🏦
+        </div>
+
+        <h2>
+          No bank connected
+        </h2>
+
+        <p>
+          Connect your bank to see your account
+          information here.
+        </p>
+
+        <button
+          @click="$emit('navigate', '/connect-bank')"
+        >
+          Connect Your First Bank
+        </button>
+
+      </div>
+
     </section>
+
+
+    <!-- LOWER DASHBOARD -->
     <section class="content-section lower-grid">
+
+      <!-- RECENT TRANSACTIONS -->
       <div>
+
         <div class="section-heading">
+
           <div>
-            <p class="eyebrow">LATEST ACTIVITY</p>
-            <h2>Recent transactions</h2>
+
+            <p class="eyebrow">
+              LATEST ACTIVITY
+            </p>
+
+            <h2>
+              Recent transactions
+            </h2>
+
           </div>
+
+
           <button
             class="link-button"
             @click="$emit('navigate', '/transactions')"
           >
             View all ↗
           </button>
+
         </div>
+
+
         <div class="activity-list">
+
           <div
-            v-for="item in transactions.slice(0, 4)"
-            :key="item.description"
+            v-if="transactions && transactions.length"
+            v-for="(item, index) in transactions.slice(0, 4)"
+            :key="
+              item.transaction_id ||
+              item.id ||
+              index
+            "
             class="activity"
           >
-            <span :class="['activity-icon', item.incoming ? 'in' : 'out']">{{
-              item.incoming ? "↗" : "↘"
-            }}</span>
-            <div>
-              <b>{{ item.description }}</b
-              ><small>{{ item.bank }} · {{ item.date }}</small>
-            </div>
-            <strong :class="item.incoming ? 'positive' : ''"
-              >{{ item.incoming ? "+" : "-" }}{{ naira(item.amount) }}</strong
+
+            <span
+              :class="[
+                'activity-icon',
+                item.incoming ? 'in' : 'out'
+              ]"
             >
+
+              {{ item.incoming ? "↗" : "↘" }}
+
+            </span>
+
+
+            <div>
+
+              <b>
+
+                {{
+                  item.description ||
+                  item.transaction_description ||
+                  "Transaction"
+                }}
+
+              </b>
+
+
+              <small>
+
+                {{
+                  item.bank_name ||
+                  item.bank ||
+                  "Bank"
+                }}
+
+                ·
+
+                {{
+                  item.date ||
+                  item.transaction_date ||
+                  ""
+                }}
+
+              </small>
+
+            </div>
+
+
+            <strong
+              :class="item.incoming ? 'positive' : ''"
+            >
+
+              {{ item.incoming ? "+" : "-" }}
+
+              {{ naira(item.amount || 0) }}
+
+            </strong>
+
           </div>
+
+
+          <!-- NO TRANSACTIONS -->
+          <div
+            v-else
+            class="empty"
+          >
+
+            <p>
+              No transactions yet.
+            </p>
+
+          </div>
+
         </div>
+
       </div>
+
+
+      <!-- SPENDING INSIGHT -->
       <div class="insight">
-        <p class="eyebrow">SPENDING THIS MONTH</p>
-        <h2>₦163,500</h2>
-        <div class="donut">
-          <span>5<br /><small>categories</small></span>
-        </div>
-        <p class="muted">
-          Your spending is down <b class="positive">12.8%</b> from last month.
+
+        <p class="eyebrow">
+          SPENDING THIS MONTH
         </p>
+
+        <h2>
+          ₦163,500
+        </h2>
+
+
+        <div class="donut">
+
+          <span>
+
+            5
+            <br />
+
+            <small>
+              categories
+            </small>
+
+          </span>
+
+        </div>
+
+
+        <p class="muted">
+
+          Your spending is down
+
+          <b class="positive">
+            12.8%
+          </b>
+
+          from last month.
+
+        </p>
+
       </div>
-    </section></DashboardLayout
-  >
+
+    </section>
+
+  </DashboardLayout>
 </template>
+```

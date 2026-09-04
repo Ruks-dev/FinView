@@ -1042,3 +1042,850 @@ aside .brand {
     width: 11px;
   }
 }
+/*Accout section*/
+.accounts-page {
+  min-height: 100vh;
+  background-color: var(--cream);
+  padding: 50px 7%;
+}
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.brand {
+  color: #020c5b;
+  font-weight: 700;
+}
+
+h1 {
+  color: #102a43;
+  margin: 5px 0;
+  font-size: 36px;
+}
+
+.page-header p {
+  color: #829ab1;
+}
+
+.page-header button,
+.empty button {
+  background: #020c5b;
+  color: white;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 9px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.accounts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.account-card {
+  background: white;
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(16, 42, 67, 0.06);
+}
+
+.account-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bank-logo {
+  width: 55px;
+  height: 55px;
+  border-radius: 14px;
+  background: #020c5b;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.connected {
+  color: #16a34a;
+  font-size: 13px;
+}
+
+.account-card h2 {
+  color: #102a43;
+  margin-bottom: 5px;
+}
+
+.account-card > p {
+  color: #829ab1;
+}
+
+.balance {
+  margin-top: 30px;
+}
+
+.balance span,
+.account-number {
+  display: block;
+  color: #829ab1;
+  font-size: 13px;
+}
+
+.balance strong {
+  display: block;
+  color: #102a43;
+  font-size: 30px;
+  margin-top: 8px;
+}
+
+.account-number {
+  margin-top: 25px;
+}
+
+.account-number strong {
+  display: block;
+  color: #243b53;
+  margin-top: 6px;
+}
+
+.disconnect {
+  width: 100%;
+  margin-top: 25px;
+  padding: 12px;
+  border: 1px solid #fecaca;
+  background: #fff5f5;
+  color: #dc2626;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.empty {
+  background: white;
+  padding: 70px 30px;
+  text-align: center;
+  border-radius: 18px;
+}
+
+.empty-icon {
+  font-size: 50px;
+}
+
+.empty h2 {
+  color: #102a43;
+}
+
+.empty p {
+  color: #829ab1;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 700px) {
+  .accounts-page {
+    padding: 30px 20px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .accounts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+.transactions-page {
+  min-height: 100vh;
+  background:  var(--cream);
+  padding: 45px 7%;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.welcome {
+  color:   #020c5b;
+  font-weight: 600;
+  margin: 0;
+}
+
+h1 {
+  color: #102a43;
+  margin: 5px 0;
+  font-size: 36px;
+}
+
+.subtitle {
+  color: #829ab1;
+  margin: 0;
+}
+
+.back-btn {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #1261ff;
+  color: white;
+  cursor: pointer;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.summary-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+}
+
+.summary-card span {
+  display: block;
+  color: #829ab1;
+  margin-bottom: 10px;
+}
+
+.summary-card strong {
+  font-size: 24px;
+  color: #102a43;
+}
+
+.filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.filters input,
+.filters select {
+  padding: 14px;
+  border: 1px solid #d9e2ec;
+  border-radius: 9px;
+  background: white;
+  outline: none;
+}
+
+.filters input {
+  flex: 1;
+}
+
+.transaction-card {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+}
+
+.transaction-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.transaction-header h2 {
+  color: #102a43;
+}
+
+.transaction-header span {
+  color: #829ab1;
+  font-size: 14px;
+}
+
+.transaction {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px 5px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.transaction-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  background: #edf3ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.transaction-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.transaction-info strong {
+  color: #243b53;
+}
+
+.transaction-info span {
+  color: #829ab1;
+  font-size: 13px;
+}
+
+.transaction-amount {
+  font-weight: 700;
+}
+
+.transaction-amount.income {
+  color: #16a34a;
+}
+
+.transaction-amount.expense {
+  color: #dc2626;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #829ab1;
+}
+
+@media (max-width: 700px) {
+  .transactions-page {
+    padding: 30px 20px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .summary {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .transaction-amount {
+    font-size: 13px;
+  }
+}
+
+
+
+
+.profile-page {
+  min-height: 100vh;
+  background: var(--cream);
+  padding: 50px 7%;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.brand {
+  color:  #020c5b;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.page-header h1 {
+  color: #102a43;
+  margin: 0 0 8px;
+  font-size: 36px;
+}
+
+.page-header > div > p:last-child {
+  color: #829ab1;
+}
+
+.back-btn {
+  border: none;
+  background:  #020c5b;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 25px;
+}
+
+.profile-card,
+.details-card,
+.security-card {
+  background: white;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 8px 30px rgba(16, 42, 67, 0.05);
+}
+
+.profile-card {
+  text-align: center;
+}
+
+.avatar {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background:  #020c5b;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.profile-card h2 {
+  color: #102a43;
+  margin-bottom: 5px;
+}
+
+.profile-card p {
+  color: #829ab1;
+}
+
+.status {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 7px 12px;
+  border-radius: 20px;
+  background: #ecfdf3;
+  color: #16a34a;
+  font-size: 13px;
+}
+
+
+/* DETAILS */
+
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title h2,
+.security-card h2 {
+  color: #102a43;
+}
+
+.card-title button {
+  border: none;
+  background: transparent;
+  color: #020c5b ;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.form-group {
+  margin-top: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: #627d98;
+  font-size: 13px;
+  margin-bottom: 7px;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+  outline: none;
+}
+
+.form-group input:disabled {
+  background: #f7f9fc;
+  color: #627d98;
+}
+
+.form-group input:focus {
+  border-color:  #020c5b;
+}
+
+.save-btn {
+  margin-top: 25px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background:  #020c5b;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* SECURITY */
+
+.security-card {
+  grid-column: 1 / -1;
+}
+
+.security-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.security-item strong {
+  color: #243b53;
+}
+
+.security-item p {
+  color: #829ab1;
+  font-size: 13px;
+  margin: 6px 0 0;
+}
+
+.security-item button {
+  border: 1px solid  #020c5b;
+  background: white;
+  color:  #020c5b;
+  padding: 9px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+  .profile-page {
+    padding: 30px 20px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .security-card {
+    grid-column: auto;
+  }
+
+  .security-item {
+    gap: 15px;
+  }
+
+}
+
+
+
+
+.expenses-page {
+  min-height: 100vh;
+  background: var(--cream);
+  padding: 50px 7%;
+}
+
+
+/* HEADER */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.brand {
+  color: #020c5b;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.page-header h1 {
+  color: #102a43;
+  margin: 0 0 8px;
+  font-size: 36px;
+}
+
+.page-header p:last-child {
+  color: #829ab1;
+}
+
+.back-btn {
+  background: #020c5b ;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+/* SUMMARY */
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.summary-card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(16, 42, 67, .04);
+}
+
+.summary-card span {
+  display: block;
+  color: #829ab1;
+  margin-bottom: 10px;
+}
+
+.summary-card strong {
+  display: block;
+  color: #102a43;
+  font-size: 25px;
+}
+
+.summary-card small {
+  color: #9fb3c8;
+}
+
+
+/* TOP */
+
+.top-section {
+  margin-top: 30px;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-section h2 {
+  color: #102a43;
+  margin: 0;
+}
+
+.top-section p {
+  color: #829ab1;
+}
+
+.add-btn {
+  background: #1261ff;
+  color: white;
+  border: none;
+  padding: 13px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+/* FORM */
+
+.expense-form {
+  margin-top: 15px;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.expense-form h2 {
+  color: #102a43;
+}
+
+.expense-form input,
+.expense-form select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  margin: 7px 0;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.save-btn {
+  margin-top: 12px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+/* CATEGORIES */
+
+.categories {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.category-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.category-icon {
+  width: 45px;
+  height: 45px;
+  background: #edf3ff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-card strong {
+  color: #243b53;
+}
+
+.category-card p {
+  color: #102a43;
+  font-weight: 700;
+  margin: 5px 0 0;
+}
+
+
+/* EXPENSE LIST */
+
+.expenses-card {
+  margin-top: 25px;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h2 {
+  color: #102a43;
+}
+
+.card-header select {
+  padding: 10px;
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+}
+
+.expense-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px 5px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.expense-icon {
+  width: 45px;
+  height: 45px;
+  background: #fff4f4;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expense-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.expense-info strong {
+  color: #243b53;
+}
+
+.expense-info span {
+  color: #829ab1;
+  font-size: 13px;
+}
+
+.amount {
+  color: #dc2626;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #829ab1;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+  .expenses-page {
+    padding: 30px 20px;
+  }
+
+  .page-header,
+  .top-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .summary {
+    grid-template-columns: 1fr;
+  }
+
+  .categories {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .categories {
+    grid-template-columns: 1fr;
+  }
+
+}
+

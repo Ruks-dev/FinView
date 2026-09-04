@@ -9,7 +9,6 @@ import {
   availableBanks,
   expenses,
   naira,
-  transactions,
 } from "../components/data";
 
 import AccountDetails from "./AccountDetails.vue";
@@ -30,6 +29,7 @@ const menuOpen = ref(false);
 const currentUser = ref(null);
 const accounts = ref([]);
 const connected = ref([]);
+const transactions = ref([]);
 
 function getSessionUser() {
   return getSession()?.user || null;
@@ -151,6 +151,47 @@ async function getAccounts() {
 
     accounts.value = accountsWithBalances;
     connected.value = accountsWithBalances.map((account) => account.bank_name);
+
+    const accountTransactions = await Promise.all(
+      accountsWithBalances.map(async (account) => {
+        try {
+          const response = await fetch(
+            apiUrl(`/api/transactions?account_id=${account.account_id}`),
+            {
+              headers: {
+                Authorization: `Bearer ${session?.token || ""}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            return [];
+          }
+
+          const rows = await response.json();
+
+          return rows.map((item) => ({
+            ...item,
+            amount: Number(item.amount || 0),
+            incoming: item.transaction_type === "credit",
+            description: item.description || "Transaction",
+            bank_name: account.bank_name,
+            date: item.transaction_date || item.date || new Date().toISOString(),
+          }));
+        } catch (error) {
+          console.error(
+            `Error getting transactions for account ${account.account_id}:`,
+            error
+          );
+
+          return [];
+        }
+      })
+    );
+
+    transactions.value = accountTransactions
+      .flat()
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
   } catch (error) {
     console.error("Error loading accounts:", error);
   }

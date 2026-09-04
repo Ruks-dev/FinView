@@ -80,6 +80,38 @@ const spendingTrendLabel = computed(() => {
   return `${spendingChange.value <= 0 ? "↓" : "↑"} ${change}% from last month`;
 });
 
+const recentTransactions = computed(() => {
+  return (props.transactions || []).slice().sort((a, b) => {
+    const first = new Date(a.date || a.transaction_date || a.created_at || Date.now());
+    const second = new Date(b.date || b.transaction_date || b.created_at || Date.now());
+    return second - first;
+  }).slice(0, 4);
+});
+
+const spendingCategoriesCount = computed(() => {
+  const now = new Date();
+  const uniqueCategories = new Set();
+
+  (props.transactions || []).forEach((item) => {
+    if (item.incoming) {
+      return;
+    }
+
+    const itemDate = new Date(
+      item.date || item.transaction_date || item.created_at || Date.now()
+    );
+    const isCurrentMonth =
+      itemDate.getMonth() === now.getMonth() &&
+      itemDate.getFullYear() === now.getFullYear();
+
+    if (isCurrentMonth && item.category) {
+      uniqueCategories.add(item.category);
+    }
+  });
+
+  return uniqueCategories.size;
+});
+
 defineEmits(["navigate", "toggle-menu"]);
 </script>
 
@@ -334,8 +366,8 @@ defineEmits(["navigate", "toggle-menu"]);
         <div class="activity-list">
 
           <div
-            v-if="transactions && transactions.length"
-            v-for="(item, index) in transactions.slice(0, 4)"
+            v-if="recentTransactions && recentTransactions.length"
+            v-for="(item, index) in recentTransactions"
             :key="
               item.transaction_id ||
               item.id ||
@@ -428,7 +460,7 @@ defineEmits(["navigate", "toggle-menu"]);
         </p>
 
         <h2>
-          ₦163,500
+          {{ props.naira(monthlySpending) }}
         </h2>
 
 
@@ -436,7 +468,7 @@ defineEmits(["navigate", "toggle-menu"]);
 
           <span>
 
-            5
+            {{ spendingCategoriesCount }}
             <br />
 
             <small>
@@ -450,10 +482,14 @@ defineEmits(["navigate", "toggle-menu"]);
 
         <p class="muted">
 
-          Your spending is down
+          Your spending
 
-          <b class="positive">
-            12.8%
+          <b :class="spendingChange <= 0 ? 'positive' : ''">
+            {{ spendingChange <= 0 ? 'is down' : 'is up' }}
+          </b>
+
+          <b :class="spendingChange <= 0 ? 'positive' : ''">
+            {{ Math.abs(spendingChange).toFixed(1) }}%
           </b>
 
           from last month.

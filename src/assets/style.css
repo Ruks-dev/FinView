@@ -907,7 +907,6 @@ aside .brand {
   margin: 0 0 5px;
 }
 .detail-balance {
-  background: var(--cream);
   border-radius: 8px;
   padding: 22px;
   margin-bottom: 25px;
@@ -1045,7 +1044,6 @@ aside .brand {
 /*Accout section*/
 .accounts-page {
   min-height: 100vh;
-  background-color: var(--cream);
   padding: 50px 7%;
 }
 .page-header {
@@ -1201,11 +1199,8 @@ h1 {
   }
 }
 
-
-
 .transactions-page {
   min-height: 100vh;
-  background:  var(--cream);
   padding: 45px 7%;
 }
 
@@ -1217,7 +1212,7 @@ h1 {
 }
 
 .welcome {
-  color:   #020c5b;
+  color: #020c5b;
   font-weight: 600;
   margin: 0;
 }
@@ -1387,12 +1382,8 @@ h1 {
   }
 }
 
-
-
-
 .profile-page {
   min-height: 100vh;
-  background: var(--cream);
   padding: 50px 7%;
 }
 
@@ -1404,7 +1395,7 @@ h1 {
 }
 
 .brand {
-  color:  #020c5b;
+  color: #020c5b;
   font-weight: 700;
   margin-bottom: 5px;
 }
@@ -1421,7 +1412,7 @@ h1 {
 
 .back-btn {
   border: none;
-  background:  #020c5b;
+  background: #020c5b;
   color: white;
   padding: 12px 18px;
   border-radius: 8px;
@@ -1452,7 +1443,7 @@ h1 {
   height: 90px;
   margin: 0 auto 20px;
   border-radius: 50%;
-  background:  #020c5b;
+  background: #020c5b;
   color: white;
   display: flex;
   align-items: center;
@@ -1480,7 +1471,6 @@ h1 {
   font-size: 13px;
 }
 
-
 /* DETAILS */
 
 .card-title {
@@ -1497,7 +1487,7 @@ h1 {
 .card-title button {
   border: none;
   background: transparent;
-  color: #020c5b ;
+  color: #020c5b;
   font-weight: 700;
   cursor: pointer;
 }
@@ -1528,7 +1518,7 @@ h1 {
 }
 
 .form-group input:focus {
-  border-color:  #020c5b;
+  border-color: #020c5b;
 }
 
 .save-btn {
@@ -1536,12 +1526,11 @@ h1 {
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
-  background:  #020c5b;
+  background: #020c5b;
   color: white;
   font-weight: 700;
   cursor: pointer;
 }
-
 
 /* SECURITY */
 
@@ -1568,19 +1557,17 @@ h1 {
 }
 
 .security-item button {
-  border: 1px solid  #020c5b;
+  border: 1px solid #020c5b;
   background: white;
-  color:  #020c5b;
+  color: #020c5b;
   padding: 9px 15px;
   border-radius: 7px;
   cursor: pointer;
 }
 
-
 /* MOBILE */
 
 @media (max-width: 700px) {
-
   .profile-page {
     padding: 30px 20px;
   }
@@ -1602,18 +1589,13 @@ h1 {
   .security-item {
     gap: 15px;
   }
-
 }
-
-
-
 
 .expenses-page {
   min-height: 100vh;
-  background: var(--cream);
+
   padding: 50px 7%;
 }
-
 
 /* HEADER */
 
@@ -1641,14 +1623,13 @@ h1 {
 }
 
 .back-btn {
-  background: #020c5b ;
+  background: #020c5b;
   color: white;
   border: none;
   padding: 12px 18px;
   border-radius: 8px;
   cursor: pointer;
 }
-
 
 /* SUMMARY */
 
@@ -1662,7 +1643,7 @@ h1 {
   background: white;
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(16, 42, 67, .04);
+  box-shadow: 0 5px 20px rgba(16, 42, 67, 0.04);
 }
 
 .summary-card span {
@@ -1680,7 +1661,6 @@ h1 {
 .summary-card small {
   color: #9fb3c8;
 }
-
 
 /* TOP */
 
@@ -1711,7 +1691,6 @@ h1 {
   border-radius: 8px;
   cursor: pointer;
 }
-
 
 /* FORM */
 
@@ -1745,7 +1724,6 @@ h1 {
   border-radius: 8px;
   cursor: pointer;
 }
-
 
 /* CATEGORIES */
 
@@ -1784,7 +1762,6 @@ h1 {
   font-weight: 700;
   margin: 5px 0 0;
 }
-
 
 /* EXPENSE LIST */
 
@@ -1855,11 +1832,9 @@ h1 {
   color: #829ab1;
 }
 
-
 /* MOBILE */
 
 @media (max-width: 800px) {
-
   .expenses-page {
     padding: 30px 20px;
   }
@@ -1878,14 +1853,10 @@ h1 {
   .categories {
     grid-template-columns: 1fr 1fr;
   }
-
 }
 
 @media (max-width: 500px) {
-
   .categories {
     grid-template-columns: 1fr;
   }
-
 }
-

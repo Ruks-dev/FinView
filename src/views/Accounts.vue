@@ -94,4 +94,3 @@ function disconnectAccount(name) {
   accounts.value = [];
 }
 </script>
-

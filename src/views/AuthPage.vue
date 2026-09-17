@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import MarketingLayout from "../components/MarketingLayout.vue";
-import { apiUrl } from "../api.js";
+import { apiUrl, readApiResponse } from "../api.js";
 import { saveSession } from "../session.js";
 
 const props = defineProps({
@@ -73,7 +73,7 @@ async function handleSubmit() {
       body: JSON.stringify(body),
     });
 
-    const data = await response.json();
+    const data = await readApiResponse(response);
 
     if (!response.ok) {
       throw new Error(data.message || "Something went wrong.");
@@ -96,7 +96,9 @@ async function handleSubmit() {
       }, 1000);
     }
   } catch (error) {
-    errorMessage.value = error.message;
+    errorMessage.value = error.message.includes("Failed to fetch")
+      ? "Cannot reach the backend. Start the backend server and check its database settings."
+      : error.message;
   } finally {
     loading.value = false;
   }

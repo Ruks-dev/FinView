@@ -17,15 +17,25 @@ dotenv.config({
 
 const app = express();
 
-// Allow the frontend dev server (and any origins listed in .env) to call this API.
-// Set FRONTEND_URL in .env, e.g. FRONTEND_URL=http://localhost:5173
-const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
+// Allow localhost and any frontend origins explicitly listed in .env.
+// Set FRONTEND_URL in .env for a deployed or LAN frontend, comma-separated.
+const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,http://127.0.0.1:5173")
   .split(",")
   .map((origin) => origin.trim());
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      if (process.env.NODE_ENV !== "production") {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Origin is not allowed by CORS"));
+    },
     credentials: true,
   })
 );
@@ -60,5 +70,5 @@ pool.query("SELECT NOW()", (err, result) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on http://0.0.0.0:${port}`);
 });
